@@ -28,7 +28,7 @@ namespace ET
             Game.Scene.AddComponent<NumericWatcherComponent>();
             
             Game.Scene.AddComponent<NetThreadComponent>();
-            
+            Game.Scene.AddComponent<DBManagerComponent>();
             Game.Scene.AddComponent<NavmeshComponent, Func<string, byte[]>>(RecastFileReader.Read);
 
             switch (Game.Options.AppType)
