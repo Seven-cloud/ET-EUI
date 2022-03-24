@@ -33,13 +33,11 @@ namespace ET
 				if (errorCode != ErrorCode.ERR_Success)
 				{
 					Log.Error(errorCode.ToString());
-					return;
 				}
 			}
 			catch (Exception e)
 			{
 				Log.Error(e.ToString());
-
 			}
 		}
 		

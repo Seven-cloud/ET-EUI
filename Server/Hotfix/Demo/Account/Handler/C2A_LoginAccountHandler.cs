@@ -89,6 +89,12 @@ namespace ET
 
                     }
 
+                    long sessionInstanceId = session.DomainScene().GetComponent<AccountSessionComponent>().Get(account.Id);
+                    Session otherSession = Game.EventSystem.Get(sessionInstanceId) as Session;
+                    otherSession?.Send(new A2C_Disconnect(){ Error =  0});
+                    otherSession?.Disconnect();
+                    session.DomainScene().GetComponent<AccountSessionComponent>().Add(account.Id,account.InstanceId);
+                    
                     string Token = TimeHelper.ServerNow().ToString() + RandomHelper.RandomNumber(int.MinValue, int.MaxValue).ToString();
                     
                     session.DomainScene().GetComponent<TokenComponent>().Remove(account.Id);
