@@ -14,77 +14,95 @@ namespace ET
                 return;
             }
             session.RemoveComponent<SessionAcceptTimeoutComponent>();
+
+            if (session.GetComponent<SessionLockingComponent>()!= null)
+            {
+                response.Error = ErrorCode.ERR_RequestRepeatError;
+                reply();
+                session.Disconnect();
+                return;
+                
+            }
             if (string.IsNullOrEmpty(request.Account) || string.IsNullOrEmpty(request.Password))
             {
                 response.Error = ErrorCode.ERR_LoginInfoError;
                 reply();
-                session.Dispose();
+                session.Disconnect();
                 return;
             }
 
             if (!Regex.IsMatch(request.Account.Trim(),@"^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{6,20}$"))
             {
-                response.Error = ErrorCode.ERR_LoginInfoError;
+                response.Error = ErrorCode.ERR_AccountNameFormatError;
                 reply();
-                session.Dispose();
+                session.Disconnect();
                 return;
             }
             if (!Regex.IsMatch(request.Password.Trim(),@"^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{6,20}$"))
             {
-                response.Error = ErrorCode.ERR_LoginInfoError;
+                response.Error = ErrorCode.ERR_PasswordFormatError;
                 reply();
-                session.Dispose();
+                session.Disconnect();
                 return;
             }
 
-            var accountInfoList =  await DBManagerComponent.Instance.GetZoneDB(session.DomainZone())
-                    .Query<Account>(d => d.AccountName.Equals(request.Account.Trim()));
-
-            Account account = null;
-            if (accountInfoList.Count > 0)
+            using (session.AddComponent<SessionLockingComponent>())
             {
-                account = accountInfoList[0];
-                session.AddChild(account);
-                if (account.AccountType  == (int)AccountType.blockList)
-                {
-                    response.Error = ErrorCode.ERR_LoginInfoError;
-                    reply();
-                    session.Dispose();
-                    return;
-                }
 
-                if (!account.Password.Equals(request.Password))
+                using (await CoroutineLockComponent.Instance.Wait(CoroutineLockType.LoginAccount,request.Account.GetHashCode()) )
                 {
-                    response.Error = ErrorCode.ERR_LoginInfoError;
+                    var accountInfoList =  await DBManagerComponent.Instance.GetZoneDB(session.DomainZone())
+                        .Query<Account>(d => d.AccountName.Equals(request.Account.Trim()));
+                    
+                    Account account = null;
+                    if (accountInfoList !=null && accountInfoList.Count > 0)
+                    {
+                        account = accountInfoList[0];
+                        session.AddChild(account);
+                        if (account.AccountType  == (int)AccountType.blockList)
+                        {
+                            response.Error = ErrorCode.ERR_AccountInBlackListError;
+                            reply();
+                            session.Disconnect();
+                            account.Dispose();
+                            return;
+                        }
+
+                        if (!account.Password.Equals(request.Password))
+                        {
+                            response.Error = ErrorCode.ERR_LoginPasswordError;
+                            reply();
+                            session.Disconnect();
+                            account.Dispose();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        account = session.AddChild<Account>();
+                        account.AccountName = request.Account;
+                        account.Password = request.Password;
+                        account.CreateTime = TimeHelper.ServerNow();
+                        account.AccountType = (int) AccountType.Normal;
+
+                        await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Save<Account>(account);
+
+                    }
+
+                    string Token = TimeHelper.ServerNow().ToString() + RandomHelper.RandomNumber(int.MinValue, int.MaxValue).ToString();
+                    
+                    session.DomainScene().GetComponent<TokenComponent>().Remove(account.Id);
+                    session.DomainScene().GetComponent<TokenComponent>().Add(account.Id,Token);
+
+
+                    response.AccountId = account.Id;
+                    
+                    response.Token = Token;
+                    account.Dispose();
                     reply();
-                    session.Dispose();
-                    return;
+        
                 }
             }
-            else
-            {
-                account = session.AddChild<Account>();
-                account.AccountName = request.Account;
-                account.Password = request.Password;
-                account.CreateTime = TimeHelper.ServerNow();
-                account.AccountType = (int) AccountType.Normal;
-
-                await DBManagerComponent.Instance.GetZoneDB(session.DomainZone()).Save<Account>(account);
-
-            }
-
-            string Token = TimeHelper.ServerNow().ToString() + RandomHelper.RandomNumber(int.MinValue, int.MaxValue).ToString();
-            
-            session.DomainScene().GetComponent<TokenComponent>().Remove(account.Id);
-            session.DomainScene().GetComponent<TokenComponent>().Add(account.Id,Token);
-
-
-            response.AccountId = account.Id;
-            response.Token = Token;
-
-            reply();
-
-
         }
     }
 }
