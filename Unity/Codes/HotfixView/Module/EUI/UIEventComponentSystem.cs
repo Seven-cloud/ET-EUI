@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Permissions;
 
 namespace ET
 {
@@ -18,6 +19,7 @@ namespace ET
         public override void Destroy(UIEventComponent self)
         {
             self.UIEventHandlers.Clear();
+            self.IsClick = false;
             UIEventComponent.Instance = null;
         }
     }
@@ -44,5 +46,11 @@ namespace ET
             Log.Error($"windowId : {windowID} is not have any uiEvent");
             return null;
         }
+
+        public static void SetUICclicked(this UIEventComponent self, bool isClicked)
+        {
+            self.IsClick = isClicked;
+        }
+
     }
 }

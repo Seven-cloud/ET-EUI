@@ -17,6 +17,17 @@ namespace ET
 
         public const int ERR_NetWorkError = 200002;   
         
-        public const int ERR_LoginInfoError = 200003;  //登录错误
+        public const int ERR_LoginInfoError = 200003;  //登录信息错误
+        
+        public const int ERR_AccountNameFormatError = 200004;  //登录账号格式错误
+        
+        
+        public const int ERR_PasswordFormatError = 200005;  //登录密码格式错误
+        
+        public const int ERR_AccountInBlackListError = 200006;  // 账号处于黑名单中
+        
+        
+        public const int ERR_LoginPasswordError = 200007;  //登录密码错误
+        public const int ERR_RequestRepeatError = 200008;  //登录请求重复
     }
 }
