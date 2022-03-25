@@ -325,4 +325,32 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(L2A_LoginAccoutResponse))]
+	[Message(InnerOpcode.A2L_LoginAccoutRequest)]
+	[ProtoContract]
+	public partial class A2L_LoginAccoutRequest: Object, IActorRequest
+	{
+		[ProtoMember(90)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1)]
+		public long AccountId { get; set; }
+
+	}
+
+	[Message(InnerOpcode.L2A_LoginAccoutResponse)]
+	[ProtoContract]
+	public partial class L2A_LoginAccoutResponse: Object, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 }

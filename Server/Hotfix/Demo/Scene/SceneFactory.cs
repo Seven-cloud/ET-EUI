@@ -41,6 +41,11 @@ namespace ET
                     scene.AddComponent<TokenComponent>();
                     scene.AddComponent<AccountSessionComponent>();
                     break;
+                
+                case SceneType.LoginCenter:  //中心服器
+
+                    scene.AddComponent<LoginInfoRecordComponent>();
+                    break;
             }
 
             return scene;

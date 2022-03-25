@@ -89,12 +89,25 @@ namespace ET
 
                     }
 
+                    StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.DomainZone(), "LoginCenter");
+                    long loginCenterInstanceId = startSceneConfig.InstanceId;
+                    var LoginAccountResponse =
+                           (L2A_LoginAccoutResponse) await ActorMessageSenderComponent.Instance.Call(loginCenterInstanceId,
+                                new A2L_LoginAccoutRequest() { AccountId = account.Id });
+                    if (LoginAccountResponse.Error != ErrorCode.ERR_Success)
+                    {
+                        response.Error = LoginAccountResponse.Error;
+
+                        reply();
+                        session?.Disconnect();
+                        account?.Dispose();
+                    }
                     long sessionInstanceId = session.DomainScene().GetComponent<AccountSessionComponent>().Get(account.Id);
                     Session otherSession = Game.EventSystem.Get(sessionInstanceId) as Session;
                     otherSession?.Send(new A2C_Disconnect(){ Error =  0});
                     otherSession?.Disconnect();
                     session.DomainScene().GetComponent<AccountSessionComponent>().Add(account.Id,account.InstanceId);
-                    
+                    session.AddComponent<AccountCheckoutTimeComponent, long>(account.Id);
                     string Token = TimeHelper.ServerNow().ToString() + RandomHelper.RandomNumber(int.MinValue, int.MaxValue).ToString();
                     
                     session.DomainScene().GetComponent<TokenComponent>().Remove(account.Id);
