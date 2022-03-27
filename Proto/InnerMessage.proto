@@ -168,3 +168,17 @@ message L2A_LoginAccoutResponse // IActorResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+//ResponseType G2L_DisconentGateUnit
+message L2G_DisconentGateUnit // IActorRequest
+{
+	int32 RpcId = 90;
+	int64 AccountId = 1;
+}
+
+message G2L_DisconentGateUnit // IActorResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

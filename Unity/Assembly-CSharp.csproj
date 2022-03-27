@@ -43,13 +43,13 @@
   <ItemGroup>
      <None Include="Assets\link.xml" />
      <Reference Include="UnityEngine">
-     <HintPath>E:/2020.3.24f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
+     <HintPath>D:/ProgramFiles/Unity2020/2020.3.18f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>
      <Reference Include="UnityEngine.CoreModule">
-     <HintPath>E:/2020.3.24f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
+     <HintPath>D:/ProgramFiles/Unity2020/2020.3.18f1c1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
      </Reference>
      <Reference Include="UnityEditor">
-     <HintPath>E:/2020.3.24f1c1/Editor/Data/Managed/UnityEngine/UnityEditor.dll</HintPath>
+     <HintPath>D:/ProgramFiles/Unity2020/2020.3.18f1c1/Editor/Data/Managed/UnityEngine/UnityEditor.dll</HintPath>
      </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

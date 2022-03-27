@@ -353,4 +353,32 @@ namespace ET
 
 	}
 
+	[ResponseType(nameof(G2L_DisconentGateUnit))]
+	[Message(InnerOpcode.L2G_DisconentGateUnit)]
+	[ProtoContract]
+	public partial class L2G_DisconentGateUnit: Object, IActorRequest
+	{
+		[ProtoMember(90)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(1)]
+		public long AccountId { get; set; }
+
+	}
+
+	[Message(InnerOpcode.G2L_DisconentGateUnit)]
+	[ProtoContract]
+	public partial class G2L_DisconentGateUnit: Object, IActorResponse
+	{
+		[ProtoMember(1)]
+		public int RpcId { get; set; }
+
+		[ProtoMember(2)]
+		public int Error { get; set; }
+
+		[ProtoMember(3)]
+		public string Message { get; set; }
+
+	}
+
 }

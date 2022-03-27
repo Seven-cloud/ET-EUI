@@ -38,7 +38,7 @@ namespace ET
                 session.Disconnect();
                 return;
             }
-            if (!Regex.IsMatch(request.Password.Trim(),@"^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{6,20}$"))
+            if (!Regex.IsMatch(request.Password.Trim(),@"^[A-Za-z0-9]+$"))
             {
                 response.Error = ErrorCode.ERR_PasswordFormatError;
                 reply();
@@ -97,7 +97,7 @@ namespace ET
                     if (LoginAccountResponse.Error != ErrorCode.ERR_Success)
                     {
                         response.Error = LoginAccountResponse.Error;
-
+                    
                         reply();
                         session?.Disconnect();
                         account?.Dispose();
