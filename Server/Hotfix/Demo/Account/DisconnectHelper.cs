@@ -2,7 +2,7 @@
 {
     public static class DisconnectHelper
     {
-        public static async void Disconnect(this Session self)
+        public static async ETTask Disconnect(this Session self)
         {
             if (self == null|| self.IsDisposed)
             {

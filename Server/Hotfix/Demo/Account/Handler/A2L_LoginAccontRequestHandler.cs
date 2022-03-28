@@ -19,12 +19,9 @@ namespace ET
                 }
 
                 int zone = scene.GetComponent<LoginInfoRecordComponent>().Get(accountId);
-                Log.Debug("A====0",zone);
                 StartSceneConfig startSceneConfig = RealmGateAddressHelper.GetGate(zone,accountId);
-                Log.Debug("A====1");
-               var   G2L_DisconentGateUnit =       (G2L_DisconentGateUnit)await  MessageHelper.CallActor(startSceneConfig.InstanceId, new L2G_DisconentGateUnit() { AccountId = accountId });
+                var   G2L_DisconentGateUnit =       (G2L_DisconentGateUnit)await  MessageHelper.CallActor(startSceneConfig.InstanceId, new L2G_DisconentGateUnit() { AccountId = accountId });
                response.Error = G2L_DisconentGateUnit.Error;
-               Log.Debug("A====2" + response.Error);
                reply();
             }
         }

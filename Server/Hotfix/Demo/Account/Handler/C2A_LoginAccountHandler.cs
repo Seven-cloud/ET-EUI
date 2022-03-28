@@ -19,7 +19,7 @@ namespace ET
             {
                 response.Error = ErrorCode.ERR_RequestRepeatError;
                 reply();
-                session.Disconnect();
+                session.Disconnect().Coroutine();
                 return;
                 
             }
@@ -27,7 +27,7 @@ namespace ET
             {
                 response.Error = ErrorCode.ERR_LoginInfoError;
                 reply();
-                session.Disconnect();
+                session.Disconnect().Coroutine();
                 return;
             }
 
@@ -35,14 +35,14 @@ namespace ET
             {
                 response.Error = ErrorCode.ERR_AccountNameFormatError;
                 reply();
-                session.Disconnect();
+                session.Disconnect().Coroutine();
                 return;
             }
             if (!Regex.IsMatch(request.Password.Trim(),@"^[A-Za-z0-9]+$"))
             {
                 response.Error = ErrorCode.ERR_PasswordFormatError;
                 reply();
-                session.Disconnect();
+                session.Disconnect().Coroutine();
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace ET
                         {
                             response.Error = ErrorCode.ERR_AccountInBlackListError;
                             reply();
-                            session.Disconnect();
+                            session.Disconnect().Coroutine();
                             account.Dispose();
                             return;
                         }
@@ -72,7 +72,7 @@ namespace ET
                         {
                             response.Error = ErrorCode.ERR_LoginPasswordError;
                             reply();
-                            session.Disconnect();
+                            session.Disconnect().Coroutine();
                             account.Dispose();
                             return;
                         }

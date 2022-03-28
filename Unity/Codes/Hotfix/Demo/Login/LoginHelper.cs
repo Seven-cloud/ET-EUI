@@ -35,7 +35,75 @@ namespace ET
             zoneScene.GetComponent<AccountInfoComponent>().Token = a2CLoginAccount.Token;
             zoneScene.GetComponent<AccountInfoComponent>().AccountId = a2CLoginAccount.AccountId;
             return ErrorCode.ERR_Success;
-        } 
+        }
+
+        public static async ETTask<int> GetSeverInfo(Scene zoneScene)
+        {
+            A2C_GetServerInfo a2CGetServerInfo = null;
+            try
+            {
+                a2CGetServerInfo = (A2C_GetServerInfo) await zoneScene.GetComponent<SessionComponent>().Session.Call(new C2A_GetServerInfo()
+                {
+                    Token = zoneScene.GetComponent<AccountInfoComponent>().Token,
+                    Account = zoneScene.GetComponent<AccountInfoComponent>().AccountId
+                });
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e.ToString());
+                return ErrorCode.ERR_NetWorkError;
+            }
+
+            if (a2CGetServerInfo?.Error != ErrorCode.ERR_Success)
+            {
+                return a2CGetServerInfo.Error;
+            }
+
+            foreach (var infoProto in a2CGetServerInfo.ServerInfoList)
+            {
+                ServerInfo serverInfo = zoneScene.GetComponent<ServerInfoComponent>().AddChild<ServerInfo>();
+                serverInfo.FromMessage(infoProto);
+                zoneScene.GetComponent<ServerInfoComponent>().Add(serverInfo);
+            }
+            await ETTask.CompletedTask;
+
+            return ErrorCode.ERR_Success;
+        }
+
+
+        public static async ETTask<int> CreateRole(Scene zoneScene,string name)
+        {
+            A2C_CreateRole a2CCreateRole = null;
+            try
+            {
+                a2CCreateRole = (A2C_CreateRole) await zoneScene.GetComponent<SessionComponent>().Session.Call(new C2A_CreateRole()
+                {
+                    AccountId = zoneScene.GetComponent<AccountInfoComponent>().AccountId,
+                    Token = zoneScene.GetComponent<AccountInfoComponent>().Token,
+                    ServerId = zoneScene.GetComponent<ServerInfoComponent>().CurrentServerId,
+                    Name = name
+                });
+            }
+            catch (Exception e)
+            {
+               Log.Error(e.ToString());
+               return ErrorCode.ERR_NetWorkError;
+            }
+
+            if (a2CCreateRole.Error != ErrorCode.ERR_Success)
+            {
+                
+                
+                return a2CCreateRole.Error;
+            }
+
+            RoleInfo newRoleInfo = zoneScene.GetComponent<RoleInfoComponent>().AddChild<RoleInfo>();
+            newRoleInfo.FromMessage(a2CCreateRole.RoleInfo);
+            
+            zoneScene.GetComponent<RoleInfoComponent>().RoleInfos.Add(newRoleInfo);
+            return ErrorCode.ERR_Success;
+        }
+
         public static async ETTask LoginGate(Scene zoneScene, string address, string account, string password)
         {
             try
