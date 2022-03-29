@@ -17,7 +17,7 @@ namespace ET
 
 		public static void ShowWindow(this DlgLogin self, Entity contextData = null)
 		{
-			self.View.ESCommonUI.SetLabelContent("登录界面");
+			
 		}
 		
 		public static async ETTask OnLoginClickHandler(this DlgLogin self)
@@ -36,7 +36,7 @@ namespace ET
 					return;
 				}
 				self.DomainScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Login);
-				self.DomainScene().GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Lobby);
+				self.DomainScene().GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Server);
 				
 			}
 			catch (Exception e)

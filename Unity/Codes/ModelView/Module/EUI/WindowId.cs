@@ -9,5 +9,7 @@
         WindowID_RedDot,   //红点测试界面
         WindowID_Helper,   //提示界面
         WindowID_Test,
+        WindowID_Server,    //选择服务器
+        WindowID_Roles,     // 创建角色
     }
 }
