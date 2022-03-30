@@ -49,14 +49,14 @@ namespace ET
 			itemRole.ENameText.SetText(info.Name);
 			itemRole.EButtonImage.color = info.Id == self.ZoneScene().GetComponent<RoleInfoComponent>().CurrentRoleId? Color.cyan : Color.white;
 			itemRole.EButtonButton.AddListener(() =>
-					{
-						self.OnSelectItemHandler(info.Id);
-					});
+			{
+				self.OnSelectItemHandler(info.Id);
+			});
 		}
 		
 		public static void  OnSelectItemHandler(this DlgRoles self, long RoleId)
 		{
-			self.ZoneScene().GetComponent<RoleInfoComponent>().CurrentRoleId = int.Parse(RoleId.ToString());
+			self.ZoneScene().GetComponent<RoleInfoComponent>().CurrentRoleId = long.Parse(RoleId.ToString());
 			Log.Debug($"当前选的角色 Id 是：{RoleId}");
 			self.View.ELoopScrollList_RoleLoopHorizontalScrollRect.RefillCells();
 		}

@@ -29,7 +29,6 @@ namespace ET
 		{
 			int count = self.ZoneScene().GetComponent<ServerInfoComponent>().ServerInfoList.Count;
 			
-			Log.Error( "========count===="+ count .ToString());
 			self.AddUIScrollItems(ref self.ScrollItemServerDict,count);
 			self.View.ELoopScrollList_ServerLoopVerticalScrollRect.SetVisible(true,count);
 
@@ -76,12 +75,10 @@ namespace ET
 			Scroll_Item_server server = self.ScrollItemServerDict[index].BindTrans(transform);
 			ServerInfo info = self.ZoneScene().GetComponent<ServerInfoComponent>().ServerInfoList[index];
 			server.E_LabelText.SetText(info.ServerName);
-			server.E_ToggleToggle.isOn = info.Id == self.ZoneScene().GetComponent<ServerInfoComponent>().CurrentServerId;
-			Log.Error("============" + server.E_ToggleToggle.isOn);
-			server.E_ToggleToggle.AddListener((t) =>
+			server.E_SelectItemImage.color = info.Id == self.ZoneScene().GetComponent<ServerInfoComponent>().CurrentServerId ?Color.green : Color.white;
+			server.E_SelectItemButton.AddListener(() =>
 			{
-				Log.Error("================xuan");
-					 self.OnSelectServerItemHandler( info.Id);
+				self.OnSelectServerItemHandler(info.Id);
 			});
 		}
 

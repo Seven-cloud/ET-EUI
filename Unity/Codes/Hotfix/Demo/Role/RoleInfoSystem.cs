@@ -7,6 +7,7 @@
             self.Id = roleInfoProto.Id;
             self.ServerId = roleInfoProto.ServerId;
             self.State = roleInfoProto.State;
+            self.Name = roleInfoProto.Name;
             self.Account = roleInfoProto.AccountId;
             self.LastLoginTime = roleInfoProto.LastLoginTime;
             self.CreateTime = roleInfoProto.CreateTime;
@@ -18,6 +19,7 @@
             {
                 Id = self.Id,
                 ServerId = self.ServerId,
+                Name =  self.Name,
                 State = self.State,
                 AccountId = self.Account,
                 LastLoginTime = self.LastLoginTime,

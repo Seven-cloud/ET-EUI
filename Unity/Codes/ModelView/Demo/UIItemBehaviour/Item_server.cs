@@ -17,7 +17,7 @@ namespace ET
 			return this;
 		}
 
-		public UnityEngine.UI.Toggle E_ToggleToggle
+		public UnityEngine.UI.Button E_SelectItemButton
      	{
      		get
      		{
@@ -28,15 +28,39 @@ namespace ET
      			}
      			if (this.isCacheNode)
      			{
-     				if( this.m_E_ToggleToggle == null )
+     				if( this.m_E_SelectItemButton == null )
      				{
-		    			this.m_E_ToggleToggle = UIFindHelper.FindDeepChild<UnityEngine.UI.Toggle>(this.uiTransform.gameObject,"E_Toggle");
+		    			this.m_E_SelectItemButton = UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject,"E_SelectItem");
      				}
-     				return this.m_E_ToggleToggle;
+     				return this.m_E_SelectItemButton;
      			}
      			else
      			{
-		    		return UIFindHelper.FindDeepChild<UnityEngine.UI.Toggle>(this.uiTransform.gameObject,"E_Toggle");
+		    		return UIFindHelper.FindDeepChild<UnityEngine.UI.Button>(this.uiTransform.gameObject,"E_SelectItem");
+     			}
+     		}
+     	}
+
+		public UnityEngine.UI.Image E_SelectItemImage
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if (this.isCacheNode)
+     			{
+     				if( this.m_E_SelectItemImage == null )
+     				{
+		    			this.m_E_SelectItemImage = UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject,"E_SelectItem");
+     				}
+     				return this.m_E_SelectItemImage;
+     			}
+     			else
+     			{
+		    		return UIFindHelper.FindDeepChild<UnityEngine.UI.Image>(this.uiTransform.gameObject,"E_SelectItem");
      			}
      		}
      	}
@@ -54,25 +78,27 @@ namespace ET
      			{
      				if( this.m_E_LabelText == null )
      				{
-		    			this.m_E_LabelText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject,"E_Label");
+		    			this.m_E_LabelText = UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject,"E_SelectItem/E_Label");
      				}
      				return this.m_E_LabelText;
      			}
      			else
      			{
-		    		return UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject,"E_Label");
+		    		return UIFindHelper.FindDeepChild<UnityEngine.UI.Text>(this.uiTransform.gameObject,"E_SelectItem/E_Label");
      			}
      		}
      	}
 
 		public void DestroyWidget()
 		{
-			this.m_E_ToggleToggle = null;
+			this.m_E_SelectItemButton = null;
+			this.m_E_SelectItemImage = null;
 			this.m_E_LabelText = null;
 			this.uiTransform = null;
 		}
 
-		private UnityEngine.UI.Toggle m_E_ToggleToggle = null;
+		private UnityEngine.UI.Button m_E_SelectItemButton = null;
+		private UnityEngine.UI.Image m_E_SelectItemImage = null;
 		private UnityEngine.UI.Text m_E_LabelText = null;
 		public Transform uiTransform = null;
 	}
