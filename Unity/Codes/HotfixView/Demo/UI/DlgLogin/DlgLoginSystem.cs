@@ -35,6 +35,13 @@ namespace ET
 					Log.Error(errorCode.ToString());
 					return;
 				}
+
+				errorCode = await LoginHelper.GetSeverInfo(self.ZoneScene());
+				if (errorCode!= ErrorCode.ERR_Success)
+				{
+					Log.Error(errorCode.ToString());
+					return;
+				}
 				self.DomainScene().GetComponent<UIComponent>().HideWindow(WindowID.WindowID_Login);
 				self.DomainScene().GetComponent<UIComponent>().ShowWindow(WindowID.WindowID_Server);
 				
@@ -44,6 +51,9 @@ namespace ET
 				Log.Error(e.ToString());
 			}
 		}
+		
+		
+		
 		
 		public static void HideWindow(this DlgLogin self)
 		{

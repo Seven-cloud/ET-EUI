@@ -54,7 +54,7 @@
                 return;
             }
             self.ServerInfos.Clear();
-            foreach (var info in self.ServerInfos)
+            foreach (var info in serverInfoList )
             {
                 self.AddChild(info);
                 self.ServerInfos.Add(info);

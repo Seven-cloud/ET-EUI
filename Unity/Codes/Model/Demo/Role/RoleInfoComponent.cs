@@ -5,6 +5,6 @@ namespace ET
     public class RoleInfoComponent :Entity,IAwake,IDestroy
     {
         public List<RoleInfo> RoleInfos = new List<RoleInfo>();
-        public long CurrentRoleId = 0;
+        public int CurrentRoleId = 0;
     }
 }

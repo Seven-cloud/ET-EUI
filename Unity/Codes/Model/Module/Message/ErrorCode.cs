@@ -32,6 +32,7 @@ namespace ET
         
         public const int ERR_TokenError = 200009;  //登录令牌错误
         public const int ERR_RoleNameIsNull = 200010;  //角色名字为空
-        public const int ERR_RoleNameSame = 200011;  //角色名字为空
+        public const int ERR_RoleNameSame = 200011;  //角色名字相同
+        public const int ERR_RoleNotExist = 200012; //角色不存在
     }
 }

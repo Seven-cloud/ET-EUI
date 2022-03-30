@@ -39,23 +39,6 @@ namespace ET
      		}
      	}
 
-		public UnityEngine.UI.Toggle E_Toggle1Toggle
-     	{
-     		get
-     		{
-     			if (this.uiTransform == null)
-     			{
-     				Log.Error("uiTransform is null.");
-     				return null;
-     			}
-     			if( this.m_E_Toggle1Toggle == null )
-     			{
-		    		this.m_E_Toggle1Toggle = UIFindHelper.FindDeepChild<UnityEngine.UI.Toggle>(this.uiTransform.gameObject,"Sprite_BackGround/E_Toggle1");
-     			}
-     			return this.m_E_Toggle1Toggle;
-     		}
-     	}
-
 		public UnityEngine.UI.Button E_DeleRoleButton
      	{
      		get
@@ -158,29 +141,46 @@ namespace ET
      		}
      	}
 
+		public UnityEngine.UI.LoopHorizontalScrollRect ELoopScrollList_RoleLoopHorizontalScrollRect
+     	{
+     		get
+     		{
+     			if (this.uiTransform == null)
+     			{
+     				Log.Error("uiTransform is null.");
+     				return null;
+     			}
+     			if( this.m_ELoopScrollList_RoleLoopHorizontalScrollRect == null )
+     			{
+		    		this.m_ELoopScrollList_RoleLoopHorizontalScrollRect = UIFindHelper.FindDeepChild<UnityEngine.UI.LoopHorizontalScrollRect>(this.uiTransform.gameObject,"Sprite_BackGround/ELoopScrollList_Role");
+     			}
+     			return this.m_ELoopScrollList_RoleLoopHorizontalScrollRect;
+     		}
+     	}
+
 		public void DestroyWidget()
 		{
 			this.m_E_NameInputField = null;
 			this.m_E_NameImage = null;
-			this.m_E_Toggle1Toggle = null;
 			this.m_E_DeleRoleButton = null;
 			this.m_E_DeleRoleImage = null;
 			this.m_E_CreateRoleButton = null;
 			this.m_E_CreateRoleImage = null;
 			this.m_E_PlayButton = null;
 			this.m_E_PlayImage = null;
+			this.m_ELoopScrollList_RoleLoopHorizontalScrollRect = null;
 			this.uiTransform = null;
 		}
 
 		private UnityEngine.UI.InputField m_E_NameInputField = null;
 		private UnityEngine.UI.Image m_E_NameImage = null;
-		private UnityEngine.UI.Toggle m_E_Toggle1Toggle = null;
 		private UnityEngine.UI.Button m_E_DeleRoleButton = null;
 		private UnityEngine.UI.Image m_E_DeleRoleImage = null;
 		private UnityEngine.UI.Button m_E_CreateRoleButton = null;
 		private UnityEngine.UI.Image m_E_CreateRoleImage = null;
 		private UnityEngine.UI.Button m_E_PlayButton = null;
 		private UnityEngine.UI.Image m_E_PlayImage = null;
+		private UnityEngine.UI.LoopHorizontalScrollRect m_ELoopScrollList_RoleLoopHorizontalScrollRect = null;
 		public Transform uiTransform = null;
 	}
 }
