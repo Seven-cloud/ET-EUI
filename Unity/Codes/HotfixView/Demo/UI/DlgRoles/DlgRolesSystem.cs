@@ -114,6 +114,26 @@ namespace ET
 		}
 		public static async ETTask OnPlayGameClickHandler(this DlgRoles self)
 		{
+			if (self.ZoneScene().GetComponent<RoleInfoComponent>().CurrentRoleId == 0)
+			{
+				Log.Error("请选择进入游戏的角色");
+				return;
+			}
+
+			try
+			{
+				int errorcode = await LoginHelper.GetRealmmKey(self.ZoneScene());
+				if (errorcode != ErrorCode.ERR_Success)
+				{
+					Log.Error(errorcode.ToString());
+					return;
+				}
+				
+			}
+			catch (Exception e)
+			{
+				Log.Error(e.ToString());
+			}
 			await ETTask.CompletedTask;
 		}
 	}
