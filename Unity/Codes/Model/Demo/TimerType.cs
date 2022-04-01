@@ -8,6 +8,8 @@
         public const int SessionAcceptTimeout = 1003;
         
         public const int AccountSessionCheckoutTime = 1004;   // 超时
+        
+        public const int PlayerOffOutTime = 1005;   //  离线时间
         // 不能超过10000
     }
 }

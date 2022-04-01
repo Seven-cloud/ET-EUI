@@ -23,6 +23,8 @@ namespace ET
         
         public const int LoginRealm  = 13;              //登录均衡服务器锁
         
+        public const int LoginGate = 14;              //登录Gate服务器锁
+        
         public const int Max = 100; // 这个必须最大
     }
 }

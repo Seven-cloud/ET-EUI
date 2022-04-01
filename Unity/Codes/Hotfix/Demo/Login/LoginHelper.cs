@@ -291,6 +291,25 @@ namespace ET
                 return g2CLoginGameGate.Error;
             }
             Log.Debug("登录gate成功！");
+
+            G2C_EnterGame g2CEnterGame = null;
+            try
+            {
+                g2CEnterGame = (G2C_EnterGame) await gateSession.Call(new C2G_EnterGame() { });
+            }
+            catch (Exception e)
+            {
+              Log.Debug(e.ToString());
+              zoneScene.GetComponent<SessionComponent>().Session .Dispose();
+              return ErrorCode.ERR_NetWorkError;
+            }
+
+            if (g2CEnterGame.Error != ErrorCode.ERR_Success)
+            {
+                Log.Error(g2CEnterGame.Error.ToString());
+                return g2CEnterGame.Error;
+            }
+            Log.Debug("角色进入成功！！！！！！");
             return ErrorCode.ERR_Success;
         }
         public static async ETTask LoginGate(Scene zoneScene, string address, string account, string password)

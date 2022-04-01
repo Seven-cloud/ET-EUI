@@ -7,7 +7,7 @@ namespace ET
         protected override async ETTask Run(Scene scene, L2G_DisconentGateUnit request, G2L_DisconentGateUnit response, Action reply)
         {
             long accountId = request.AccountId;
-            using (await  CoroutineLockComponent.Instance.Wait(CoroutineLockType.LoginGateLock,accountId.GetHashCode()))
+            using (await  CoroutineLockComponent.Instance.Wait(CoroutineLockType.LoginGate,accountId.GetHashCode()))
             {
                 PlayerComponent playerComponent = scene.AddComponent<PlayerComponent>();
                Player player = playerComponent.Get(accountId);
@@ -16,8 +16,17 @@ namespace ET
                    reply();
                    return;
                }  
-               playerComponent.Remove(accountId);
-               player.Dispose();
+               scene.GetComponent<GateSessionKeyComponent>().Remove(accountId);
+               
+               Session gateSession = Game.EventSystem.Get(player.SessionInstanceId) as Session;
+               if (gateSession != null && !gateSession.IsDisposed)
+               {
+                   gateSession.Send(new  A2C_Disconnect(){Error =  ErrorCode.ERR_OtherAccountLogin});
+                   gateSession?.Disconnect().Coroutine();
+               }
+
+               player.SessionInstanceId = 0;
+               player.AddComponent<PlayerOffLineOutTimeComponent>();
             }
         }
     }

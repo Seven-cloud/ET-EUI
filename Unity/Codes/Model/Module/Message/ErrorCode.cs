@@ -36,5 +36,9 @@ namespace ET
         public const int ERR_RoleNotExist = 200012; //角色不存在
         public const int ERR_RequestSceneTypeError = 200013; // 请求的sceneType 错误
         
+        public const int ERR_ConenctGateKeyError = 200014; // 连接Gate令牌 错误
+        
+        public const int ERR_OtherAccountLogin = 200015; // 账号再其他地方登录
+        
     }
 }

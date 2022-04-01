@@ -45,7 +45,6 @@ namespace ET
                 session.Disconnect().Coroutine();
                 return;
             }
-
             using (session.AddComponent<SessionLockingComponent>())
             {
 
