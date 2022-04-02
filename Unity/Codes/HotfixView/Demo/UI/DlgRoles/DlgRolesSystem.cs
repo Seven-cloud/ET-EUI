@@ -128,7 +128,14 @@ namespace ET
 					Log.Error(errorcode.ToString());
 					return;
 				}
-				
+
+				errorcode = await LoginHelper.EnterGame(self.ZoneScene());
+				if (errorcode != ErrorCode.ERR_Success)
+				{
+					Log.Error(errorcode.ToString());
+					return;
+				}
+				Log.Debug("========进入角色成功");
 			}
 			catch (Exception e)
 			{

@@ -240,7 +240,7 @@ namespace ET
         {
             string realmAddress = zoneScene.GetComponent<AccountInfoComponent>().RealmAddress;
             R2C_LoginRealm r2CLoginRealm = null;
-
+            Log.Warning("=========" + realmAddress);
             Session session = zoneScene.GetComponent<NetKcpComponent>().Create(NetworkHelper.ToIPEndPoint(realmAddress));
             try
             {
@@ -273,7 +273,7 @@ namespace ET
             {
                 g2CLoginGameGate = (G2C_LoginGameGate) await gateSession.Call(new C2G_LoginGameGate()
                 {
-                    Account = gateSession.GetComponent<AccountInfoComponent>().AccountId,
+                    Account = zoneScene.GetComponent<AccountInfoComponent>().AccountId,
                     Key = r2CLoginRealm.GateSessionKey,
                     RoleId = currentRoleId
                 });

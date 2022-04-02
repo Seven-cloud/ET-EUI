@@ -23,7 +23,7 @@ namespace ET
             {
                 case SceneType.Realm:
                     scene.AddComponent<NetKcpComponent, IPEndPoint, int>(startSceneConfig.OuterIPPort, SessionStreamDispatcherType.SessionStreamDispatcherServerOuter);
-                    scene.GetComponent<TokenComponent>();
+                    scene.AddComponent<TokenComponent>();
                     break;
                 case SceneType.Gate:
                     scene.AddComponent<NetKcpComponent, IPEndPoint, int>(startSceneConfig.OuterIPPort, SessionStreamDispatcherType.SessionStreamDispatcherServerOuter);
@@ -36,6 +36,7 @@ namespace ET
                     break;
                 case SceneType.Location:
                     scene.AddComponent<LocationComponent>();
+                    scene.AddComponent<LoginInfoRecordComponent>();
                     break;
                 case SceneType.Account:  // 账号服务器
                     scene.AddComponent<NetKcpComponent, IPEndPoint, int>(startSceneConfig.OuterIPPort, SessionStreamDispatcherType.SessionStreamDispatcherServerOuter);
@@ -45,7 +46,6 @@ namespace ET
                     break;
                 
                 case SceneType.LoginCenter:  //中心服器
-
                     scene.AddComponent<LoginInfoRecordComponent>();
                     break;
             }

@@ -40,5 +40,12 @@ namespace ET
         
         public const int ERR_OtherAccountLogin = 200015; // 账号再其他地方登录
         
+        public const int ERR_SessionPlayerError = 200016; // 账号再其他地方登录
+        
+        public const int ERR_NonePlayerError = 200017; // 账号再其他地方登录
+        
+        public const int ERR_SessionStateError = 200018; // 账号再其他地方登录
+        
+        public const int ERR_EnterGameError = 200019; // 进入逻辑服失败
     }
 }

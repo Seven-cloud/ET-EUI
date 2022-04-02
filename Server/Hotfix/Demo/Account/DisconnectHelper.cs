@@ -1,4 +1,6 @@
-﻿namespace ET
+﻿using System.IO.IsolatedStorage;
+
+namespace ET
 {
     public static class DisconnectHelper
     {
@@ -17,7 +19,7 @@
             }
             self.Dispose();
         }
-        public static async ETTask KickPlayer( Player  player)
+        public static async ETTask KickPlayer( Player  player, bool isException = false)
         {
             if (player == null|| player.IsDisposed)
             {
@@ -29,7 +31,11 @@
             {
                 if (player.IsDisposed || instanceId != player.InstanceId)
                 {
+                    return;
+                }
 
+                if (!isException)
+                {
                     switch (player.PlayerState)
                     {
                         case  PlayerState.Disconnect:
@@ -42,12 +48,11 @@
                             // TODO 通知游戏逻辑服下线Unit角色逻辑，并将数据存入数据库
                             break;
                     }
-
-                    player.PlayerState = PlayerState.Disconnect;
-                    player.DomainScene().GetComponent<PlayerComponent>()?.Remove(player.Account);
-                    player?.Dispose();
-                    await TimerComponent.Instance.WaitAsync(300);
                 }
+                player.PlayerState = PlayerState.Disconnect;
+                player.DomainScene().GetComponent<PlayerComponent>()?.Remove(player.Account);
+                player?.Dispose();
+                await TimerComponent.Instance.WaitAsync(300);
             }
           
         }
