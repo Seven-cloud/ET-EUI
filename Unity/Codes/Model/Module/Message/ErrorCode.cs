@@ -6,7 +6,7 @@ namespace ET
 
         // 1-11004 是SocketError请看SocketError定义
         //-----------------------------------
-        // 100000-109999是Core层的错误
+        // 100000-109999是Core层的错误f
         
         // 110000以下的错误请看ErrorCore.cs
         

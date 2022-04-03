@@ -27,7 +27,7 @@ namespace ET
                 reply();
                 return;
             }
-            Player player = Game.EventSystem.Get(sessionPlayerComponent.InstanceId) as Player;
+            Player player = Game.EventSystem.Get(sessionPlayerComponent.PlayerInstanceId) as Player;
             if (player == null || player.IsDisposed)
             {
                 response.Error = ErrorCode.ERR_NonePlayerError;
@@ -82,7 +82,7 @@ namespace ET
 
                     try
                     {
-                        GateMapComponent gateMapComponent = player.GetComponent<GateMapComponent>();
+                        GateMapComponent gateMapComponent = player.AddComponent<GateMapComponent>();
                         gateMapComponent.Scene = await SceneFactory.Create(gateMapComponent, "GateMap", SceneType.Map);
                         Unit unit = UnitFactory.Create(gateMapComponent.Scene,player.Id,UnitType.Player);
                         unit.AddComponent<UnitGateComponent, long>(session.InstanceId);

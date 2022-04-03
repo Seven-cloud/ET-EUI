@@ -12,6 +12,7 @@ namespace ET
             {
                 scene.GetComponent<LoginInfoRecordComponent>().Remove(accountId);
                 scene.GetComponent<LoginInfoRecordComponent>().Add(accountId,request.ServerId);
+                reply();
             }
             await ETTask.CompletedTask;
         }
